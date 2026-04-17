@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Gloeitje | Light Glass · Waar innovatie & zorg samenkomen</title>
+  <!-- Google Fonts: Premium serif + clean sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f0e8;
+      color: #2c2a27;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Hero background met Unsplash afbeelding + lichte glass overlay */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1446483050676-bd2fdf3ac2d6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      z-index: -2;
+    }
+
+    /* Lichte overlay voor light mode — zachte, warme sluier */
+    .hero-bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 40%, rgba(245, 240, 230, 0.7) 0%, rgba(235, 225, 210, 0.85) 100%);
+      backdrop-filter: blur(2px);
+      z-index: -1;
+    }
+
+    /* Premium glassmorphism — light mode versie */
+    .glass-premium {
+      background: rgba(255, 252, 245, 0.55);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border-radius: 2.5rem;
+      border: 1px solid rgba(200, 169, 126, 0.4);
+      box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .glass-light {
+      background: rgba(255, 250, 240, 0.5);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(200, 169, 126, 0.35);
+      border-radius: 2rem;
+    }
+
+    /* ALLE KNOPPEN doorzichtig glass look — light mode variant */
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 250, 240, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(160, 130, 90, 0.5);
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      cursor: pointer;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+      color: #4a3a2a;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    }
+
+    .btn-glass:hover {
+      background: rgba(200, 169, 126, 0.25);
+      border-color: #b58b5a;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(160, 130, 90, 0.15);
+      color: #2c2418;
+    }
+
+    .btn-glass-primary {
+      background: rgba(200, 169, 126, 0.2);
+      border: 1px solid rgba(160, 130, 90, 0.7);
+      color: #5a3f28;
+    }
+
+    .btn-glass-primary:hover {
+      background: rgba(200, 169, 126, 0.4);
+      border-color: #a57c52;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+    }
+
+    /* typography — warme, donkere kleuren voor light mode */
+    h1, h2, h3, .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 5rem;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #5a3f28 0%, #8b6946 40%, #b58b5a 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    h2 {
+      font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(120deg, #3d2e1f, #8b6946);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #4a3a2a;
+    }
+
+    .section-sub {
+      font-size: 1.2rem;
+      color: #6b5a48;
+      max-width: 680px;
+      margin-bottom: 3.5rem;
+      font-weight: 400;
+    }
+
+    /* navigation glass — light */
+    nav {
+      padding: 1.8rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250, 245, 235, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(160, 130, 90, 0.25);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #8b6946, #b58b5a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #5a4a38;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #b58b5a;
+    }
+
+    /* hero area */
+    .hero {
+      padding: 2rem 0 8rem;
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1.2;
+    }
+
+    .hero-visual {
+      flex: 1;
+    }
+
+    .floating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200, 169, 126, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(160, 130, 90, 0.4);
+      color: #8b6946;
+    }
+
+    /* benefit cards glass light */
+    .benefit-grid-luxe {
+      display: flex;
+      gap: 1.8rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .benefit-card {
+      flex: 1;
+      background: rgba(255, 252, 245, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(160, 130, 90, 0.25);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(160, 130, 90, 0.6);
+      background: rgba(255, 250, 240, 0.7);
+    }
+
+    .benefit-card i {
+      font-size: 2.2rem;
+      color: #b58b5a;
+      margin-bottom: 1rem;
+    }
+
+    /* product mockup */
+    .product-glow {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.08));
+      transition: transform 0.4s ease;
+    }
+
+    /* feature cards */
+    .feature-grid {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .feature-card-rich {
+      flex: 1;
+      background: rgba(255, 250, 240, 0.6);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 2.2rem;
+      transition: all 0.35s;
+      border-bottom: 3px solid #c8a97e;
+      border-left: 1px solid rgba(160, 130, 90, 0.2);
+      border-right: 1px solid rgba(160, 130, 90, 0.2);
+    }
+
+    .feature-card-rich i {
+      font-size: 2.8rem;
+      color: #b58b5a;
+      margin-bottom: 1.2rem;
+    }
+
+    /* stappenplan glass light */
+    .steps-luxe {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .step-luxe {
+      background: rgba(255, 252, 245, 0.55);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      flex: 1;
+      border: 1px solid rgba(160, 130, 90, 0.3);
+    }
+
+    .step-number-luxe {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #b58b5a, #8b6946);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* testimonials */
+    .testimonial-luxe {
+      background: rgba(255, 252, 245, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 2rem;
+      flex: 1;
+      border-left: 4px solid #c8a97e;
+    }
+
+    /* CTA glass light */
+    .cta-dramatic {
+      background: rgba(255, 250, 240, 0.7);
+      backdrop-filter: blur(20px);
+      border-radius: 3rem;
+      padding: 5rem 3rem;
+      text-align: center;
+      border: 1px solid rgba(160, 130, 90, 0.4);
+    }
+
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(160, 130, 90, 0.25);
+      text-align: center;
+      color: #8b7a68;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 4rem 0; }
+      .hero-grid { flex-direction: column; gap: 2rem; }
+      .hero { min-height: auto; }
+    }
+
+    /* reveal animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* zachte gloed voor light mode */
+    .orb-bg {
+      position: fixed;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(200, 169, 126, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+      bottom: -20vh;
+      right: -20vw;
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+<div class="orb-bg"></div>
+
+<!-- Hero sectie met Unsplash afbeelding + lichte overlay -->
+<section id="home" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-overlay"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content fade-up">
+        <div class="floating-badge">
+          <i class="fas fa-glass-cheers"></i> Gloeitje · Light Glass Intelligence
+        </div>
+        <h1>Waar zorg<br>vloeibaar wordt.</h1>
+        <p style="font-size: 1.25rem; margin: 1.8rem 0 2rem; color: #5a4a38; max-width: 90%; line-height: 1.5;">
+          Gloeitje combineert glass-morphism design met slimme zorg. Veiligheid, gezondheidsmonitoring en sociale connectie — helder als kristal, warm als daglicht.
+        </p>
+        <div style="display: flex; gap: 1.2rem; flex-wrap: wrap;">
+          <a href="#werking" class="btn-glass btn-glass-primary">Ontdek Gloeitje <i class="fas fa-arrow-right"></i></a>
+          <a href="#contact" class="btn-glass">Vraag demo aan</a>
+        </div>
+        <div class="benefit-grid-luxe">
+          <div class="benefit-card"><i class="fas fa-shield-alt"></i> <strong>Veiligheid</strong><br>Fluisterende detectie</div>
+          <div class="benefit-card"><i class="fas fa-heartbeat"></i> <strong>Gezondheid</strong><br>Inzichtelijk & zacht</div>
+          <div class="benefit-card"><i class="fas fa-hands-helping"></i> <strong>Connectie</strong><br>Warm & nabij</div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up">
+        <div class="glass-premium" style="padding: 1.5rem; text-align: center;">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 450'%3E%3Crect width='350' height='450' fill='%23fef8ef' rx='50'/%3E%3Ccircle cx='175' cy='170' r='75' fill='%23c8a97e' opacity='0.7'/%3E%3Cpath d='M120 320 L230 320 L215 370 L135 370 Z' fill='%239c7c58'/%3E%3Crect x='150' y='260' width='50' height='35' fill='%23a57c52'/%3E%3C/svg%3E" alt="Gloeitje" class="product-glow">
+          <p style="margin-top: 1rem; font-weight: 500; color:#8b6946;"><i class="fas fa-circle" style="font-size: 0.6rem; color:#c8a97e;"></i> Gloeitje · Ambient Glass Light</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Over product -->
+<section id="product">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <span class="floating-badge" style="margin: 0 auto 1rem; display: inline-flex;"><i class="fas fa-gem"></i> liquid glass technologie</span>
+      <h2>De transparante metgezel<br>voor thuis.</h2>
+      <p class="section-sub">Gloeitje is ontworpen alsof het gemaakt is van vloeibaar glas — elegant, helder en toch stevig. In een stralend licht thema.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-house-chimney-window"></i>
+        <h3>Veiligheid in huis</h3>
+        <p>Valdetectie, slimme rookmelding en patroonherkenning met glasheldere notificaties.</p>
+      </div>
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-chart-simple"></i>
+        <h3>Gezondheidsinzicht</h3>
+        <p>Monitor slaap, hartslag en activiteit. Alle data versleuteld en alleen voor wie jij kiest.</p>
+      </div>
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-hand-holding-heart"></i>
+        <h3>Eenzaamheid verminderen</h3>
+        <p>Zachte check-ins, videoberichten en een warme gloed die je eraan herinnert dat je niet alleen bent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Voordelen split -->
+<section id="voordelen" style="background: rgba(0, 0, 0, 0.02);">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Zorg die doorzichtig is</h2>
+      <p class="section-sub">Voor ouderen én hun naasten — helderheid zonder prijsgeven van privacy.</p>
+    </div>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <div class="glass-premium" style="flex:1; padding: 2.5rem;">
+        <i class="fas fa-smile-wink" style="font-size: 2.5rem; color:#b58b5a;"></i>
+        <h3 style="margin-top: 1rem;">Voor ouderen</h3>
+        <ul style="list-style: none; margin-top: 1.5rem;">
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Geen gedoe — praat of glimlach</li>
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Zelfstandig thuis met vangnet</li>
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Zachte stem & lichtsignalen</li>
+        </ul>
+      </div>
+      <div class="glass-premium" style="flex:1; padding: 2.5rem;">
+        <i class="fas fa-user-nurse" style="font-size: 2.5rem; color:#b58b5a;"></i>
+        <h3 style="margin-top: 1rem;">Voor familie & verzorgers</h3>
+        <ul style="list-style: none; margin-top: 1.5rem;">
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Heldere app & meldingen</li>
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Minder ongerust, meer vertrouwen</li>
+          <li><i class="fas fa-check-circle" style="color:#b58b5a;"></i> Eenvoudig delen met zorgteam</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Werking -->
+<section id="werking">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Hoe Gloeitje werkt</h2>
+      <p class="section-sub">Drie stappen, volledig transparant.</p>
+    </div>
+    <div class="steps-luxe">
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">01</div>
+        <i class="fas fa-plug" style="font-size: 2rem; margin: 1rem 0; color:#b58b5a;"></i>
+        <h3>Installeren</h3>
+        <p>Uitpakken, verbinden met wifi — binnen 2 minuten klaar.</p>
+      </div>
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">02</div>
+        <i class="fas fa-microchip" style="font-size: 2rem; margin: 1rem 0; color:#b58b5a;"></i>
+        <h3>Leer modus</h3>
+        <p>Gloeitje leert het dagritme en past zich aan.</p>
+      </div>
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">03</div>
+        <i class="fas fa-mobile-alt" style="font-size: 2rem; margin: 1rem 0; color:#b58b5a;"></i>
+        <h3>Blijf verbonden</h3>
+        <p>Ontvang inzichten en meldingen waar nodig.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Vloeibaar vertrouwen</h2>
+      <p class="section-sub">Wat families zeggen over Gloeitje.</p>
+    </div>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#b58b5a; opacity: 0.6;"></i>
+        <p style="margin: 1rem 0;">“Het voelt alsof er een warme, glazen bol over mijn moeder waakt. Geen indringer, wel beschermer.”</p>
+        <div><strong>— Sophie, dochter</strong></div>
+      </div>
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#b58b5a; opacity: 0.6;"></i>
+        <p style="margin: 1rem 0;">“Eindelijk een apparaat dat elegant is én functioneel. Mijn vader is er blij mee.”</p>
+        <div><strong>— Tim, mantelzorger</strong></div>
+      </div>
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#b58b5a; opacity: 0.6;"></i>
+        <p style="margin: 1rem 0;">“Gloeitje gaf mij rust. De meldingen zijn zacht, maar precies genoeg.”</p>
+        <div><strong>— Els, 78 jaar</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA met glasknoppen light -->
+<section id="contact">
+  <div class="container">
+    <div class="cta-dramatic fade-up">
+      <h2 style="color:#4a3a2a;">Ervaar Gloeitje in Light Glass</h2>
+      <p style="margin: 1rem auto; max-width: 550px; color:#6b5a48;">Vraag een demo aan en ontdek de toekomst van thuiszorg — helder als glas, warm als de ochtendzon.</p>
+      <div style="margin-top: 2rem;">
+        <a href="#" class="btn-glass btn-glass-primary" style="padding: 1rem 2.2rem;">Demo aanvragen <i class="fas fa-calendar-alt"></i></a>
+      </div>
+      <div style="margin-top: 2.5rem; display: flex; gap: 1.8rem; justify-content: center; flex-wrap: wrap;">
+        <span><i class="fas fa-phone-alt" style="color:#b58b5a;"></i> 0800 123 4567</span>
+        <span><i class="fas fa-envelope" style="color:#b58b5a;"></i> hallo@gloeitje.nl</span>
+        <span><i class="fas fa-comment" style="color:#b58b5a;"></i> Chat live</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Gloeitje — Light Glass design · waar innovatie en zorg samenkomen in helderheid</p>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem;"><i class="fas fa-shield-heart"></i> Privacy by design · Toegankelijk voor iedereen</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer
+  const fadeElements = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: "0px 0px -20px 0px" });
+  fadeElements.forEach(el => observer.observe(el));
+
+  // Smooth anchor scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === "#" || targetId === "") return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const pos = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: pos, behavior: "smooth" });
+      }
+    });
+  });
+</script>
+</body>
+</html>
