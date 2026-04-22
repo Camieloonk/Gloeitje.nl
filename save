@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Gloeitje | Light Glass · Waar innovatie & zorg samenkomen</title>
+  <!-- Google Fonts: Premium serif + clean sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #faf6ef;
+      color: #2a241e;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* ----- WARM ORANJE AMBIANCE (meer glow, diepere tint) ----- */
+    .ambient-orb {
+      position: fixed;
+      width: 90vw;
+      height: 90vw;
+      background: radial-gradient(circle, rgba(245, 150, 60, 0.12) 0%, rgba(235, 120, 30, 0.05) 40%, rgba(0, 0, 0, 0) 75%);
+      bottom: -30vh;
+      right: -30vw;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    .ambient-orb-left {
+      position: fixed;
+      width: 80vw;
+      height: 80vw;
+      background: radial-gradient(circle, rgba(255, 170, 80, 0.08) 0%, rgba(255, 130, 40, 0.03) 50%, rgba(0, 0, 0, 0) 80%);
+      top: -20vh;
+      left: -20vw;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(55px);
+    }
+
+    .warm-grain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(rgba(200, 100, 20, 0.02) 1.5px, transparent 1.5px);
+      background-size: 35px 35px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Hero achtergrond met warme oranje gloed overlay ipv neutrale beige */
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/Oma.jpeg');
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      z-index: -2;
+    }
+
+    /* Rijke oranje/goud overlay - meer ambiance */
+    .hero-bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 20%, rgba(245, 180, 100, 0.35) 0%, rgba(210, 110, 40, 0.55) 100%);
+      backdrop-filter: blur(3px);
+      z-index: -1;
+    }
+
+    /* Glassmorphism premium — warm oranje accenten */
+    .glass-premium {
+      background: rgba(255, 248, 238, 0.65);
+      backdrop-filter: blur(18px) saturate(180%);
+      -webkit-backdrop-filter: blur(18px) saturate(180%);
+      border-radius: 2.5rem;
+      border: 1px solid rgba(235, 150, 70, 0.55);
+      box-shadow: 0 25px 45px -18px rgba(180, 90, 20, 0.2), inset 0 1px 0 rgba(255, 245, 220, 0.9);
+    }
+
+    .glass-light {
+      background: rgba(255, 245, 232, 0.6);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(235, 145, 65, 0.45);
+      border-radius: 2rem;
+    }
+
+    /* Knoppen — warm glas met oranje touch */
+    .btn-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 245, 230, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(220, 130, 50, 0.65);
+      padding: 0.9rem 2rem;
+      border-radius: 3rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+      cursor: pointer;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+      color: #5a3a28;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .btn-glass:hover {
+      background: rgba(235, 165, 85, 0.35);
+      border-color: #c97e3a;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 18px 30px rgba(200, 110, 30, 0.2);
+      color: #2c1a0e;
+    }
+
+    .btn-glass-primary {
+      background: rgba(235, 155, 75, 0.25);
+      border: 1px solid rgba(210, 110, 40, 0.8);
+      color: #6b3f1c;
+    }
+
+    .btn-glass-primary:hover {
+      background: rgba(230, 140, 55, 0.45);
+      border-color: #bc6f2e;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+    }
+
+    /* Typography met warme gradient */
+    h1, h2, h3, .logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 5rem;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #c0692a 0%, #e08e48 40%, #f5b56c 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 12px rgba(220, 100, 20, 0.15);
+    }
+
+    h2 {
+      font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      background: linear-gradient(120deg, #b85f24, #e5914a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #8b4a26;
+    }
+
+    .section-sub {
+      font-size: 1.2rem;
+      color: #8b6a4c;
+      max-width: 680px;
+      margin-bottom: 3.5rem;
+      font-weight: 400;
+    }
+
+    /* Navbar — glas met oranje accenten */
+    nav {
+      padding: 1.6rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(250, 240, 225, 0.8);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid rgba(220, 130, 55, 0.3);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2.3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e0914b, #f8bc7a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #7a4a2a;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #e17e38;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 2rem 0 8rem;
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1.2;
+    }
+
+    .hero-visual {
+      flex: 1;
+    }
+
+    .floating-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(240, 155, 75, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+      border: 1px solid rgba(230, 140, 55, 0.5);
+      color: #bd6a2e;
+    }
+
+    /* Benefit cards — verrijkt met oranje glow */
+    .benefit-grid-luxe {
+      display: flex;
+      gap: 1.8rem;
+      margin-top: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .benefit-card {
+      flex: 1;
+      background: rgba(255, 245, 232, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 1.8rem;
+      padding: 1.6rem;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(230, 145, 60, 0.35);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-8px);
+      border-color: #e6873c;
+      background: rgba(255, 240, 220, 0.85);
+      box-shadow: 0 20px 30px -12px rgba(200, 100, 30, 0.2);
+    }
+
+    .benefit-card i {
+      font-size: 2.2rem;
+      color: #e07c3a;
+      margin-bottom: 1rem;
+    }
+
+    /* Product mockup met warme glow */
+    .product-glow {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      filter: drop-shadow(0 20px 30px rgba(200, 90, 20, 0.25));
+      transition: transform 0.4s ease;
+    }
+
+    .product-glow:hover {
+      transform: scale(1.02);
+    }
+
+    /* Feature cards */
+    .feature-grid {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .feature-card-rich {
+      flex: 1;
+      background: rgba(255, 245, 232, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 2.2rem;
+      transition: all 0.35s;
+      border-bottom: 3px solid #e68342;
+      border-left: 1px solid rgba(230, 130, 45, 0.3);
+      border-right: 1px solid rgba(230, 130, 45, 0.3);
+    }
+
+    .feature-card-rich i {
+      font-size: 2.8rem;
+      color: #e07a36;
+      margin-bottom: 1.2rem;
+    }
+
+    .feature-card-rich:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 245, 225, 0.85);
+      border-bottom-width: 4px;
+    }
+
+    /* Steps luxe oranje accent */
+    .steps-luxe {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .step-luxe {
+      background: rgba(255, 245, 232, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 2rem;
+      text-align: center;
+      flex: 1;
+      border: 1px solid rgba(230, 140, 55, 0.4);
+      transition: all 0.3s;
+    }
+
+    .step-luxe:hover {
+      transform: translateY(-5px);
+      border-color: #e27c32;
+      background: rgba(255, 242, 225, 0.85);
+    }
+
+    .step-number-luxe {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #e17e38, #f5ac6a);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    /* Testimonials — warme oranje accenten */
+    .testimonial-luxe {
+      background: rgba(255, 245, 232, 0.7);
+      backdrop-filter: blur(14px);
+      border-radius: 2rem;
+      padding: 2rem;
+      flex: 1;
+      border-left: 5px solid #f0904a;
+      transition: all 0.25s;
+    }
+
+    .testimonial-luxe:hover {
+      background: rgba(255, 240, 220, 0.85);
+      transform: translateX(6px);
+    }
+
+    /* CTA dramatisch — diepe oranje gloed */
+    .cta-dramatic {
+      background: rgba(255, 240, 220, 0.75);
+      backdrop-filter: blur(22px);
+      border-radius: 3rem;
+      padding: 5rem 3rem;
+      text-align: center;
+      border: 1px solid rgba(230, 130, 45, 0.6);
+      box-shadow: 0 35px 60px -25px rgba(200, 90, 20, 0.3);
+    }
+
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(220, 130, 55, 0.3);
+      text-align: center;
+      color: #a5744e;
+      background: rgba(250, 240, 225, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      .container { padding: 0 1.5rem; }
+      h1 { font-size: 2.8rem; }
+      h2 { font-size: 2rem; }
+      section { padding: 4rem 0; }
+      .hero-grid { flex-direction: column; gap: 2rem; }
+      .hero { min-height: auto; }
+      .cta-dramatic { padding: 3rem 1.5rem; }
+    }
+
+    /* fade up animation */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.95, 0.3, 1.1), transform 0.8s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* extra glow voor cirkels */
+    .glow-pulse {
+      animation: softPulse 5s infinite;
+    }
+    @keyframes softPulse {
+      0% { opacity: 0.5; }
+      50% { opacity: 1; }
+      100% { opacity: 0.5; }
+    }
+
+    /* custom scrollbar oranje tint */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f5e6d6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e0a06a;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #c97e3a;
+    }
+  </style>
+</head>
+<body>
+<div class="ambient-orb"></div>
+<div class="ambient-orb-left"></div>
+<div class="warm-grain"></div>
+
+<nav>
+  <div class="container nav-inner">
+    <div class="logo"><i class="fas fa-gem" style="font-size: 1.6rem; background: none; -webkit-background-clip: unset; color:#e17e38;"></i> Gloeitje</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#product">Product</a>
+      <a href="#werking">Werking</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero sectie met warme oranje overlay -->
+<section id="home" class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-bg-overlay"></div>
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content fade-up">
+        <div class="floating-badge">
+          <i class="fas fa-fire"></i> Gloeitje · Warm Ambient Intelligence
+        </div>
+        <h1>Waar zorg<br>gloeit als dageraad.</h1>
+        <p style="font-size: 1.25rem; margin: 1.8rem 0 2rem; color: #6b4126; max-width: 90%; line-height: 1.5;">
+          Gloeitje combineert vloeibaar glasdesign met zachte AI-zorg. Veiligheid, gezondheid en nabijheid — verwarmd door een oranje gloed die nooit te fel is.
+        </p>
+        <div style="display: flex; gap: 1.2rem; flex-wrap: wrap;">
+          <a href="#werking" class="btn-glass btn-glass-primary">Ontdek de warmte <i class="fas fa-arrow-right"></i></a>
+          <a href="#contact" class="btn-glass">Proefdemo aanvragen</a>
+        </div>
+        <div class="benefit-grid-luxe">
+          <div class="benefit-card"><i class="fas fa-shield-alt"></i> <strong>Fluisterende detectie</strong><br>Veilig, onopvallend</div>
+          <div class="benefit-card"><i class="fas fa-heartbeat"></i> <strong>Gezondheidsgloed</strong><br>Inzichten in warme tinten</div>
+          <div class="benefit-card"><i class="fas fa-hands-helping"></i> <strong>Zachte connectie</strong><br>Altijd nabij, nooit opdringerig</div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up">
+        <div class="glass-premium" style="padding: 1.8rem; text-align: center; background: rgba(255, 242, 225, 0.7);">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 350 450'%3E%3Crect width='350' height='450' fill='%23FFF2E2' rx='60'/%3E%3Ccircle cx='175' cy='170' r='75' fill='%23e68342' opacity='0.85'/%3E%3Cpath d='M120 320 L230 320 L215 370 L135 370 Z' fill='%23b7622a'/%3E%3Crect x='150' y='260' width='50' height='35' fill='%23d seventeen 743'/%3E%3C/svg%3E" alt="Gloeitje" class="product-glow">
+          <p style="margin-top: 1rem; font-weight: 600; color:#bc6f34;"><i class="fas fa-circle" style="font-size: 0.6rem; color:#e68342;"></i> Gloeitje · Amber Light Glass</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Over product met warme gloed -->
+<section id="product">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <span class="floating-badge" style="margin: 0 auto 1rem; display: inline-flex;"><i class="fas fa-glass-whiskey"></i> vloeibaar amber design</span>
+      <h2>De transparante metgezel<br>met een oranje hart.</h2>
+      <p class="section-sub">Gloeitje voelt aan als verwarmd glas — elegant, responsief en verzachtend. In een stralend lichtthema met amber accenten.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-house-chimney-window"></i>
+        <h3>Veiligheid in huis</h3>
+        <p>Valdetectie, slimme rooksignalering en patroonherkenning met glasheldere notificaties, subtiel oranje waarschuwingslicht.</p>
+      </div>
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-chart-simple"></i>
+        <h3>Gezondheidsinzicht</h3>
+        <p>Monitor slaap, hartslag en activiteit. Alle data versleuteld en warm vormgegeven in de Gloei-app.</p>
+      </div>
+      <div class="feature-card-rich fade-up">
+        <i class="fas fa-hand-holding-heart"></i>
+        <h3>Eenzaamheid verminderen</h3>
+        <p>Zachte check-ins, videoberichten en een zachte oranje gloed die je eraan herinnert dat je verbonden bent.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Voordelen split met meer oranje nuance -->
+<section id="voordelen" style="background: radial-gradient(circle at 20% 80%, rgba(240, 150, 70, 0.05), rgba(245, 220, 180, 0.1));">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Zorg die doorzichtig is</h2>
+      <p class="section-sub">Voor ouderen én hun naasten — helderheid zonder opdringerigheid, met een vleugje amber.</p>
+    </div>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <div class="glass-premium" style="flex:1; padding: 2.5rem;">
+        <i class="fas fa-smile-wink" style="font-size: 2.5rem; color:#e07c3a;"></i>
+        <h3 style="margin-top: 1rem;">Voor ouderen</h3>
+        <ul style="list-style: none; margin-top: 1.5rem;">
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Geen gedoe — praat of glimlach</li>
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Zelfstandig thuis met warm vangnet</li>
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Zachte stem & oranje lichtsignalen</li>
+        </ul>
+      </div>
+      <div class="glass-premium" style="flex:1; padding: 2.5rem;">
+        <i class="fas fa-user-nurse" style="font-size: 2.5rem; color:#e07c3a;"></i>
+        <h3 style="margin-top: 1rem;">Voor familie & verzorgers</h3>
+        <ul style="list-style: none; margin-top: 1.5rem;">
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Helder app-overzicht met dagelijkse gloed</li>
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Minder ongerust, meer vertrouwen</li>
+          <li><i class="fas fa-check-circle" style="color:#e07c3a;"></i> Eenvoudig delen met zorgteam</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Werking met zachte stappen -->
+<section id="werking">
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Hoe Gloeitje werkt</h2>
+      <p class="section-sub">Drie stappen, volledig transparant en gevuld met oranje warmte.</p>
+    </div>
+    <div class="steps-luxe">
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">01</div>
+        <i class="fas fa-plug" style="font-size: 2rem; margin: 1rem 0; color:#e17e38;"></i>
+        <h3>Installeren</h3>
+        <p>Uitpakken, verbinden met wifi — binnen 2 minuten straalt het.</p>
+      </div>
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">02</div>
+        <i class="fas fa-microchip" style="font-size: 2rem; margin: 1rem 0; color:#e17e38;"></i>
+        <h3>Leer modus</h3>
+        <p>Gloeitje leert het dagritme en past zijn amber gloed aan.</p>
+      </div>
+      <div class="step-luxe fade-up">
+        <div class="step-number-luxe">03</div>
+        <i class="fas fa-mobile-alt" style="font-size: 2rem; margin: 1rem 0; color:#e17e38;"></i>
+        <h3>Blijf verbonden</h3>
+        <p>Ontvang inzichten en meldingen met een zachte oranje puls.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container">
+    <div class="fade-up" style="text-align: center;">
+      <h2>Vloeibaar vertrouwen</h2>
+      <p class="section-sub">Wat families zeggen over Gloeitje en haar warme oranje ziel.</p>
+    </div>
+    <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#e07c3a; opacity: 0.7;"></i>
+        <p style="margin: 1rem 0;">“Het voelt alsof er een warme, glazen bol over mijn moeder waakt. De oranje gloed geeft geborgenheid.”</p>
+        <div><strong>— Sophie, dochter</strong></div>
+      </div>
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#e07c3a; opacity: 0.7;"></i>
+        <p style="margin: 1rem 0;">“Eindelijk een apparaat dat elegant is én functioneel. Het oranje nachtlichtje stelt me gerust.”</p>
+        <div><strong>— Tim, mantelzorger</strong></div>
+      </div>
+      <div class="testimonial-luxe fade-up">
+        <i class="fas fa-quote-right" style="font-size: 2rem; color:#e07c3a; opacity: 0.7;"></i>
+        <p style="margin: 1rem 0;">“Gloeitje gaf mij rust. De zachte amber gloed voelt als een vriend in de kamer.”</p>
+        <div><strong>— Els, 78 jaar</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA met extra warmte en glasknoppen -->
+<section id="contact">
+  <div class="container">
+    <div class="cta-dramatic fade-up">
+      <h2 style="color:#9b542c;">Ervaar Gloeitje in Amber Glass</h2>
+      <p style="margin: 1rem auto; max-width: 550px; color:#8b5a36;">Vraag een demo aan en ontdek de toekomst van thuiszorg — helder als kristal, warm als de avondzon.</p>
+      <div style="margin-top: 2rem;">
+        <a href="#" class="btn-glass btn-glass-primary" style="padding: 1rem 2.2rem;"><i class="fas fa-calendar-alt"></i> Demo aanvragen</a>
+      </div>
+      <div style="margin-top: 2.5rem; display: flex; gap: 1.8rem; justify-content: center; flex-wrap: wrap;">
+        <span><i class="fas fa-phone-alt" style="color:#e07c3a;"></i> 0800 123 4567</span>
+        <span><i class="fas fa-envelope" style="color:#e07c3a;"></i> hallo@gloeitje.nl</span>
+        <span><i class="fas fa-comment" style="color:#e07c3a;"></i> Chat live</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2026 Gloeitje — Amber Light Glass · waar innovatie en zorg samenkomen in een oranje gloed</p>
+    <p style="margin-top: 0.75rem; font-size: 0.8rem;"><i class="fas fa-shield-heart"></i> Privacy by design · Zachte technologie voor iedereen</p>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer met lichte vertraging voor vloeiend effect
+  const fadeElements = document.querySelectorAll('.fade-up');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -15px 0px" });
+  fadeElements.forEach(el => observer.observe(el));
+
+  // Smooth anchor scroll met offset voor sticky nav
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      if (targetId === "#" || targetId === "") return;
+      const target = document.querySelector(targetId);
+      if (target) {
+        e.preventDefault();
+        const offset = 85;
+        const pos = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: pos, behavior: "smooth" });
+      }
+    });
+  });
+</script>
+</body>
+</html>
