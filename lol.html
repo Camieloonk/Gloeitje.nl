@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Gloeitje.nl • Geen Toegang</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0a0f1c, #03060c);
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, 'Poppins', 'Roboto', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* dynamisch gloei-effect op de achtergrond – subtiele "gloeitje" sfeer */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(255, 140, 30, 0.08), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* hoofdkaart – verboden sfeer maar met warme gloed */
+    .access-denied-card {
+      position: relative;
+      z-index: 10;
+      max-width: 620px;
+      width: 100%;
+      background: rgba(12, 18, 28, 0.75);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      border: 1px solid rgba(255, 100, 30, 0.35);
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 80, 20, 0.2), 0 0 18px rgba(255, 70, 0, 0.3);
+      padding: 2.2rem 2rem 2.5rem;
+      text-align: center;
+      transition: transform 0.25s ease, box-shadow 0.3s;
+    }
+
+    .access-denied-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 32px 55px rgba(0, 0, 0, 0.6), 0 0 0 1.5px rgba(255, 100, 40, 0.5), 0 0 28px rgba(255, 90, 20, 0.5);
+      border-color: rgba(255, 110, 40, 0.7);
+    }
+
+    /* "verboden" icoon / gloed-symbool */
+    .icon-wrapper {
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .gloei-symbool {
+      background: rgba(0, 0, 0, 0.5);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.8rem;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 0 2px rgba(255, 80, 30, 0.6), 0 0 0 6px rgba(255, 60, 0, 0.2), 0 0 30px rgba(255, 100, 0, 0.5);
+      transition: all 0.2s;
+      background: linear-gradient(145deg, #1e1a17, #0e0b0a);
+    }
+
+    .gloei-symbool span {
+      filter: drop-shadow(0 0 6px #ff7b2c);
+    }
+
+    /* hoofdtitel "Gloeitje.nl" – warm maar autoritair */
+    .site-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FFF5E6, #FFCF9A, #FFAA66);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      margin-bottom: 0.75rem;
+      word-break: keep-all;
+    }
+
+    /* verbodentitel */
+    .denied-title {
+      font-size: 3.2rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin: 0.5rem 0 0.75rem;
+      background: linear-gradient(115deg, #FF3A2F, #FF6A3C, #FFB347);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      word-break: keep-all;
+    }
+
+    /* ondertitel / "geen toegang" badge */
+    .access-badge {
+      display: inline-block;
+      background: rgba(220, 40, 20, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 0.5rem 1.6rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ffb085;
+      border: 1px solid rgba(255, 80, 30, 0.6);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .message {
+      color: #e5d9cf;
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin: 1.2rem 0 1rem;
+      opacity: 0.92;
+      font-weight: 500;
+      background: rgba(0, 0, 0, 0.35);
+      padding: 0.8rem 1rem;
+      border-radius: 2rem;
+      border-left: 4px solid #ff6633;
+    }
+
+    .extra-note {
+      font-size: 0.85rem;
+      color: #a2948a;
+      margin-top: 1.8rem;
+      border-top: 1px dashed rgba(255, 100, 50, 0.4);
+      padding-top: 1.4rem;
+      display: inline-block;
+      width: 100%;
+    }
+
+    /* animatie voor gloei-effect – knipperende gloedrand (subtiel) */
+    @keyframes softPulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(255, 80, 30, 0.3), inset 0 0 0 0 rgba(255, 120, 40, 0);
+      }
+      70% {
+        box-shadow: 0 0 0 6px rgba(255, 80, 30, 0), inset 0 0 12px 2px rgba(255, 100, 30, 0.4);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 80, 30, 0), inset 0 0 0 0 rgba(255, 100, 30, 0);
+      }
+    }
+
+    .gloei-symbool {
+      animation: softPulse 3s infinite ease;
+    }
+
+    /* responsieve aanpassingen */
+    @media (max-width: 550px) {
+      .access-denied-card {
+        padding: 1.8rem 1.2rem 2rem;
+      }
+      .site-title {
+        font-size: 1.9rem;
+      }
+      .denied-title {
+        font-size: 2.4rem;
+      }
+      .message {
+        font-size: 0.95rem;
+      }
+      .gloei-symbool {
+        width: 70px;
+        height: 70px;
+        font-size: 2.8rem;
+      }
+    }
+
+    /* unieke gloei-elementen – extra gloed aan randen */
+    .access-denied-card::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 3rem;
+      background: linear-gradient(125deg, rgba(255, 100, 30, 0.3), rgba(255, 50, 20, 0.1), rgba(255, 140, 50, 0.2));
+      z-index: -1;
+      filter: blur(18px);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    /* kleine decoratieve vonkjes */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffaa66;
+      border-radius: 50%;
+      opacity: 0.6;
+      filter: blur(1px);
+      pointer-events: none;
+      animation: floatGlow 6s infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translateY(0px) translateX(0px); opacity: 0.2; }
+      100% { transform: translateY(-25px) translateX(15px); opacity: 0.7; }
+    }
+
+    footer {
+      position: absolute;
+      bottom: 1rem;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #886e5a;
+      z-index: 10;
+      background: rgba(0,0,0,0.3);
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      backdrop-filter: blur(5px);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="access-denied-card">
+  <div class="icon-wrapper">
+    <div class="gloei-symbool">
+      <span>⛔💡</span>
+    </div>
+  </div>
+  
+  <h1 class="site-title">Gloeitje.nl</h1>
+  <div class="denied-title">GEEN TOEGANG</div>
+  <div class="access-badge">🔒 VERBODEN TOEGANG 🔒</div>
+  
+  <div class="message">
+    ⚡ Je hebt geen toestemming om deze omgeving te betreden.<br>
+    De gloed is alleen voor geautoriseerde gebruikers.
+  </div>
+  
+  <div class="extra-note">
+    🚫 Toegang geweigerd • Controleer je referenties •🚫<br>
+    <span style="font-size:0.75rem; opacity:0.7;">Gloeitje.nl — beveiligde zone</span>
+  </div>
+</div>
+
+<footer>
+  ⚡ gloeitje.nl • toegang uitsluitend op uitnodiging
+</footer>
+
+<!-- kleine decoratieve sparkles / gloei-stipjes voor extra sfeer -->
+<script>
+  (function() {
+    // voeg dynamisch zwevende gloei-puntjes toe voor een subtiel 'gloeitje' effect
+    const bodyEl = document.body;
+    const sparkleCount = 24;
+    for (let i = 0; i < sparkleCount; i++) {
+      const spark = document.createElement('div');
+      spark.classList.add('sparkle');
+      const size = Math.random() * 5 + 2;
+      spark.style.width = `${size}px`;
+      spark.style.height = `${size}px`;
+      spark.style.left = `${Math.random() * 100}%`;
+      spark.style.top = `${Math.random() * 100}%`;
+      spark.style.animationDelay = `${Math.random() * 6}s`;
+      spark.style.animationDuration = `${Math.random() * 5 + 4}s`;
+      spark.style.background = `rgba(255, ${Math.floor(80 + Math.random() * 70)}, ${Math.floor(30 + Math.random() * 50)}, ${Math.random() * 0.5 + 0.2})`;
+      spark.style.filter = `blur(${Math.random() * 2}px)`;
+      bodyEl.appendChild(spark);
+    }
+
+    // optioneel: kleine interactie bij klikken op kaart - geen functionaliteit, maar een warme gloed-reactie (puur visueel)
+    const card = document.querySelector('.access-denied-card');
+    if(card) {
+      card.addEventListener('click', (e) => {
+        // alleen voor de sfeer, geen toegangswijziging — gewoon een kleine visuele "gloed puls"
+        const originalBorder = card.style.borderColor;
+        card.style.transition = 'border 0.1s, box-shadow 0.1s';
+        card.style.borderColor = '#ff8844';
+        card.style.boxShadow = '0 0 0 2px rgba(255,100,30,0.8), 0 0 32px rgba(255,70,20,0.9)';
+        setTimeout(() => {
+          card.style.borderColor = '';
+          card.style.boxShadow = '';
+        }, 180);
+      });
+    }
+  })();
+</script>
+</body>
+</html>
